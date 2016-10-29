@@ -3,4 +3,5 @@
     <string name="btn_add">Adicionar</string>
     <string name="btn_update">Atualizar</string>
     <string name="btn_get_in_threat_list">Ver lista de ameaças</string>
+    <string name="btn_get_in_new_threat">Registrar nova ameaça</string>
 </resources>
