@@ -31,20 +31,25 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void bindUiEvents() {
+        final MainActivity self = this;
+        
         btnGetInThreatList.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent it = new Intent(getBaseContext(), ThreatListActivity.class);
-                startActivity(it);
+                self.goToActivity(ThreatListActivity.class);
             }
         });
 
         btnGetInNewThreat.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent it = new Intent(getBaseContext(), AddThreadActivity.class);
-                startActivity(it);
+                self.goToActivity(AddThreadActivity.class);
             }
         });
+    }
+
+    private void goToActivity(Class activityClass) {
+        Intent it = new Intent(getBaseContext(), activityClass);
+        startActivity(it);
     }
 }
