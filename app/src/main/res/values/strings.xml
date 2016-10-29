@@ -4,4 +4,8 @@
     <string name="btn_update">Atualizar</string>
     <string name="btn_get_in_threat_list">Ver lista de ameaças</string>
     <string name="btn_get_in_new_threat">Registrar nova ameaça</string>
+    <string name="add_thread_label_description">Descrição</string>
+    <string name="add_thread_label_address">Endereço</string>
+    <string name="add_thread_label_district">Bairro</string>
+    <string name="add_thread_label_potential">Potencial</string>
 </resources>

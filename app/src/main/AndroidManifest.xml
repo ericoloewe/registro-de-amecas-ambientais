@@ -15,7 +15,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".activities.threat.ThreatListActivity"></activity>
+        <activity android:name=".activities.threat.ThreatListActivity" />
+        <activity android:name=".activities.threat.AddThreadActivity"></activity>
     </application>
 
 </manifest>
