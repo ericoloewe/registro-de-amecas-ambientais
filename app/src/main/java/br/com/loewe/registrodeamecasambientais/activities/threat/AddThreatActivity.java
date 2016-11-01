@@ -19,10 +19,6 @@ public class AddThreatActivity extends AppCompatActivity {
     private EditText inputDistrict;
     private EditText inputPotential;
 
-    public AddThreatActivity() {
-
-    }
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

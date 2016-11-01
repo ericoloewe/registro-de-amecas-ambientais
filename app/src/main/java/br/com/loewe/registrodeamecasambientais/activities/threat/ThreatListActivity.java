@@ -38,7 +38,9 @@ public class ThreatListActivity extends AppCompatActivity {
         threatList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                self.goToActivity(UpdateThreatActivity.class);
+                Bundle b = new Bundle();
+                b.putInt("threatId", (int) id);
+                self.goToActivity(UpdateThreatActivity.class, b);
             }
         });
 
@@ -75,7 +77,12 @@ public class ThreatListActivity extends AppCompatActivity {
     }
 
     private void goToActivity(Class activityClass) {
+        goToActivity(activityClass, new Bundle());
+    }
+
+    private void goToActivity(Class activityClass, Bundle bundle) {
         Intent it = new Intent(getBaseContext(), activityClass);
+        it.putExtras(bundle);
         startActivity(it);
     }
 }
