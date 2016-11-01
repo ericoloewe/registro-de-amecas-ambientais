@@ -25,8 +25,15 @@ public class ThreatListActivity extends AppCompatActivity {
 
         loadViewElements();
 
-        updateAdapter();
+        threatListAdapter = new ThreatListAdapter(this);
+        threatList.setAdapter(threatListAdapter);
         bindUiEvents();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        updateAdapterList();
     }
 
     private void loadViewElements() {
@@ -65,15 +72,14 @@ public class ThreatListActivity extends AppCompatActivity {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         self.threatListAdapter.getThreatRepository().delete(id.intValue());
-                        self.updateAdapter();
+                        self.updateAdapterList();
                     }
                 })
                 .show();
     }
 
-    private void updateAdapter() {
-        threatListAdapter = new ThreatListAdapter(this);
-        threatList.setAdapter(threatListAdapter);
+    private void updateAdapterList() {
+        threatListAdapter.updateThreatList();
     }
 
     private void goToActivity(Class activityClass) {

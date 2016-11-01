@@ -9,4 +9,80 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="br.com.loewe.registrodeamecasambientais.activities.threat.UpdateThreatActivity">
 
+    <ScrollView style="@style/AddThread_SV">
+
+        <TableLayout style="@style/AddThread_SV_TL">
+
+            <TableRow style="@style/AddThread_SV_TL_TR">
+
+                <LinearLayout style="@style/AddThread_SV_TL_TR_LL">
+
+                    <TextView
+                        style="@style/AddThread_SV_TL_TR_LL_Label"
+                        android:text="@string/add_thread_label_description" />
+
+                    <EditText
+                        android:id="@+id/inputDescription"
+                        style="@style/AddThread_SV_TL_TR_LL_Input"
+                        android:inputType="text" />
+                </LinearLayout>
+            </TableRow>
+
+            <TableRow style="@style/AddThread_SV_TL_TR">
+
+                <LinearLayout style="@style/AddThread_SV_TL_TR_LL">
+
+                    <TextView
+                        style="@style/AddThread_SV_TL_TR_LL_Label"
+                        android:text="@string/add_thread_label_address" />
+
+                    <EditText
+                        android:id="@+id/inputAddress"
+                        style="@style/AddThread_SV_TL_TR_LL_Input"
+                        android:inputType="text" />
+                </LinearLayout>
+            </TableRow>
+
+            <TableRow style="@style/AddThread_SV_TL_TR">
+
+                <LinearLayout style="@style/AddThread_SV_TL_TR_LL">
+
+                    <TextView
+                        style="@style/AddThread_SV_TL_TR_LL_Label"
+                        android:text="@string/add_thread_label_district" />
+
+                    <EditText
+                        android:id="@+id/inputDistrict"
+                        style="@style/AddThread_SV_TL_TR_LL_Input"
+                        android:inputType="text" />
+                </LinearLayout>
+            </TableRow>
+
+            <TableRow style="@style/AddThread_SV_TL_TR">
+
+                <LinearLayout style="@style/AddThread_SV_TL_TR_LL">
+
+                    <TextView
+                        style="@style/AddThread_SV_TL_TR_LL_Label"
+                        android:text="@string/add_thread_label_potential" />
+
+                    <EditText
+                        android:id="@+id/inputPotential"
+                        style="@style/AddThread_SV_TL_TR_LL_Input"
+                        android:inputType="number" />
+                </LinearLayout>
+            </TableRow>
+
+            <TableRow style="@style/AddThread_SV_TL_TR">
+
+                <LinearLayout style="@style/AddThread_SV_TL_TR_LL">
+
+                    <Button
+                        android:id="@+id/btnSubmit"
+                        style="@style/AddThread_SV_TL_TR_LL_ButtonSubmit"
+                        android:text="@string/btn_update" />
+                </LinearLayout>
+            </TableRow>
+        </TableLayout>
+    </ScrollView>
 </RelativeLayout>

@@ -28,7 +28,7 @@ public class ThreatListAdapter extends BaseAdapter {
         updateThreatList();
     }
 
-    private void updateThreatList() {
+    public void updateThreatList() {
         threatList = threatRepository.list();
     }
 
