@@ -48,8 +48,8 @@ public class ThreatListAdapter extends BaseAdapter {
 
     @Override
     public long getItemId(int position) {
-        Threat threat = threatRepository.find(position);
-        return threat != null ? threat.getId() : 0;
+        updateThreatList();
+        return threatList.get(position).getId();
     }
 
     @Override
