@@ -25,40 +25,66 @@ public class Repository<T extends Object> {
         this.base = base;
     }
 
-    public Cursor find(Integer id) {
+    protected Cursor findCursor(Integer id) {
+        dbHelper.open();
         String colId = DbPersistor.getPrimaryKey(base).getName();
-        return this.dbHelper.getDb().rawQuery(String.format("SELECT FROM %s * WHERE %s = ?", TABLE_NAME, colId), new String[]{id.toString()});
+        Cursor cursor = this.dbHelper.getDb().rawQuery(String.format("SELECT FROM %s * WHERE %s = ?", TABLE_NAME, colId), new String[]{id.toString()});
+
+        if (!cursor.moveToFirst()) {
+            throw new IllegalArgumentException(String.format("No cursor has with id: %d", id));
+        }
+
+        dbHelper.close();
+
+        return cursor;
     }
 
-    public void insert(ContentValues values) {
+    protected void insert(ContentValues values) {
+        dbHelper.open();
         this.dbHelper.getDb().insert(TABLE_NAME, null, values);
+        dbHelper.close();
     }
 
-    public void update(ContentValues values) {
+    protected void update(ContentValues values) {
+        dbHelper.open();
         String colId = DbPersistor.getPrimaryKey(base).getName();
+
         this.dbHelper.getDb().update(TABLE_NAME, values, String.format("%s=?", colId), new String[]{values.getAsString(colId)});
+        dbHelper.close();
     }
 
-    public Integer delete(Integer id) {
+    protected Integer deleteById(Integer id) {
+        dbHelper.open();
         String colId = DbPersistor.getPrimaryKey(base).getName();
-        return this.dbHelper.getDb().delete(TABLE_NAME, colId + "=" + id, null);
+
+        Integer delete = this.dbHelper.getDb().delete(TABLE_NAME, colId + "=" + id, null);
+        dbHelper.close();
+        return delete;
     }
 
-    public Cursor list() {
+    protected Cursor listByCursor() {
+        dbHelper.open();
         String colId = DbPersistor.getPrimaryKey(base).getName();
         List<String> columNames = DbPersistor.getColumNames(base);
         String[] colums = columNames.toArray(new String[columNames.size()]);
 
-        return this.dbHelper.getDb().query(TABLE_NAME, colums, null, null, null, null, colId);
+        Cursor list = this.dbHelper.getDb().query(TABLE_NAME, colums, null, null, null, null, colId);
+        dbHelper.close();
+
+        return list;
     }
 
     public Integer empty() {
-        return this.dbHelper.getDb().delete(TABLE_NAME, null, null);
+        dbHelper.open();
+        Integer delete = this.dbHelper.getDb().delete(TABLE_NAME, null, null);
+
+        dbHelper.close();
+        return delete;
     }
 
     private class RepositoryDBHelper<T extends Object> extends SQLiteOpenHelper {
         private static final String DB_NAME = "threat.db";
-        private static final int DB_VERSION = 1;
+        private static final int DB_VERSION = 2;
         private final String TABLE_NAME;
         private final String SQL_CREATE_TABLE;
         private SQLiteDatabase db;
@@ -67,6 +93,7 @@ public class Repository<T extends Object> {
             super(context, DB_NAME, null, DB_VERSION);
             this.TABLE_NAME = tableName;
             this.SQL_CREATE_TABLE = sqlCreateTable;
+            open();
         }
 
         public void open() {

@@ -14,14 +14,18 @@ public class DbPersistor {
 
     public static String buildCreateTableCommand(Class base) {
         StringBuilder sql = new StringBuilder();
-        sql.append("CREATE TABLE IF NOT EXISTS ");
+        sql.append("CREATE TABLE ");
         sql.append(getTableName(base));
-        sql.append("(");
+        sql.append("\n( ");
 
         for (Field atr : base.getDeclaredFields()) {
-            sql.append(createTableField(atr));
+            if (!atr.getName().equals("$change")) {
+                sql.append(createTableField(atr));
+            }
         }
-        sql.append(")");
+
+        sql.deleteCharAt(sql.length() - 2);
+        sql.append("\n)");
 
         return sql.toString();
     }
@@ -37,9 +41,9 @@ public class DbPersistor {
             tipoDoBanco = "INTEGER";
         }
         if (isPrimaryKey(atr)) {
-            return String.format("\n%s %s NULL,", nome, tipoDoBanco);
+            return String.format("\n\t%s %s PRIMARY KEY AUTOINCREMENT, ", nome, tipoDoBanco);
         } else {
-            return String.format("\n%s %s PRIMARY KEY AUTOINCREMENT,", nome, tipoDoBanco);
+            return String.format("\n\t%s %s NULL, ", nome, tipoDoBanco);
         }
     }
 

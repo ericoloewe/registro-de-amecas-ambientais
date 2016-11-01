@@ -64,7 +64,7 @@
                     <EditText
                         android:id="@+id/inputPotential"
                         style="@style/AddThread_SV_TL_TR_LL_Input"
-                        android:inputType="text" />
+                        android:inputType="number" />
                 </LinearLayout>
             </TableRow>
 

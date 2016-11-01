@@ -31,7 +31,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void bindUiEvents() {
         final MainActivity self = this;
-        
+
         btnGetInThreatList.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
