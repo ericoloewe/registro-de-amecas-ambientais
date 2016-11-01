@@ -4,10 +4,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.util.List;
 
+import br.com.loewe.registrodeamecasambientais.IO.ImageIO;
 import br.com.loewe.registrodeamecasambientais.R;
 import br.com.loewe.registrodeamecasambientais.activities.threat.ThreatListActivity;
 import br.com.loewe.registrodeamecasambientais.model.Threat;
@@ -63,11 +65,20 @@ public class ThreatListAdapter extends BaseAdapter {
         TextView address = (TextView) row.findViewById(R.id.address);
         TextView district = (TextView) row.findViewById(R.id.district);
         TextView potential = (TextView) row.findViewById(R.id.potential);
+        ImageView image = (ImageView) row.findViewById(R.id.image);
 
         description.setText(threatList.get(position).getDescription());
         address.setText(threatList.get(position).getAddress());
         district.setText(threatList.get(position).getDistrict());
         potential.setText(String.format("%d", threatList.get(position).getPotential()));
+        String threatImage = threatList.get(position).getImage();
+        if (threatImage != null) {
+            image.setImageBitmap(
+                    new ImageIO(this.context)
+                            .setDirectoryName("THREAT")
+                            .setFileName(threatImage)
+                            .load());
+        }
 
         return row;
     }

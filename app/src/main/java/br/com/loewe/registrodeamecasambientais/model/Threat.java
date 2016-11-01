@@ -7,6 +7,7 @@ public class Threat {
     private String address;
     private String district;
     private Integer potential;
+    private String image;
 
     public Integer getId() {
         return id;
@@ -46,5 +47,13 @@ public class Threat {
 
     public void setPotential(Integer potential) {
         this.potential = potential;
+    }
+
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
     }
 }

@@ -21,4 +21,9 @@
         android:id="@+id/potential"
         style="@style/ListThread_TextView"
         android:text="@string/list_thread_label_potential" />
+    
+    <ImageView
+        android:id="@+id/image"
+        android:layout_width="50dp"
+        android:layout_height="50dp" />
 </LinearLayout>

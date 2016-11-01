@@ -19,6 +19,7 @@ public class ThreatRepository extends Repository<Threat> {
     private static final String COL_ADDRESS = "address";
     private static final String COL_DISTRICT = "district";
     private static final String COL_POTENTIAL = "potential";
+    private static final String COL_IMAGE = "image";
 
     public ThreatRepository(Context context) {
         super(context, Threat.class);
@@ -35,6 +36,7 @@ public class ThreatRepository extends Repository<Threat> {
         values.put(COL_ADDRESS, threat.getAddress());
         values.put(COL_DISTRICT, threat.getDistrict());
         values.put(COL_POTENTIAL, threat.getPotential());
+        values.put(COL_IMAGE, threat.getImage());
 
         super.insert(values);
     }
@@ -47,6 +49,7 @@ public class ThreatRepository extends Repository<Threat> {
         values.put(COL_ADDRESS, threat.getAddress());
         values.put(COL_DISTRICT, threat.getDistrict());
         values.put(COL_POTENTIAL, threat.getPotential());
+        values.put(COL_IMAGE, threat.getImage());
 
         super.update(values);
     }
@@ -76,6 +79,7 @@ public class ThreatRepository extends Repository<Threat> {
         threat.setAddress(cursor.getString(cursor.getColumnIndex(COL_ADDRESS)));
         threat.setDistrict(cursor.getString(cursor.getColumnIndex(COL_DISTRICT)));
         threat.setPotential(cursor.getInt(cursor.getColumnIndex(COL_POTENTIAL)));
+        threat.setImage(cursor.getString(cursor.getColumnIndex(COL_IMAGE)));
 
         return threat;
     }
