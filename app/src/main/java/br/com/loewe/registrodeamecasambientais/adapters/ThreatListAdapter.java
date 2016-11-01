@@ -32,6 +32,10 @@ public class ThreatListAdapter extends BaseAdapter {
         threatList = threatRepository.list();
     }
 
+    public ThreatRepository getThreatRepository() {
+        return threatRepository;
+    }
+
     @Override
     public int getCount() {
         return threatRepository.list().size();

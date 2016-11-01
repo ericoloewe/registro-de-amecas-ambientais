@@ -16,7 +16,8 @@
             </intent-filter>
         </activity>
         <activity android:name=".activities.threat.ThreatListActivity" />
-        <activity android:name=".activities.threat.AddThreadActivity"></activity>
+        <activity android:name=".activities.threat.AddThreatActivity" />
+        <activity android:name=".activities.threat.UpdateThreatActivity"></activity>
     </application>
 
 </manifest>

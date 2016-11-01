@@ -7,7 +7,7 @@ import android.view.View;
 import android.widget.ImageButton;
 
 import br.com.loewe.registrodeamecasambientais.R;
-import br.com.loewe.registrodeamecasambientais.activities.threat.AddThreadActivity;
+import br.com.loewe.registrodeamecasambientais.activities.threat.AddThreatActivity;
 import br.com.loewe.registrodeamecasambientais.activities.threat.ThreatListActivity;
 
 public class MainActivity extends AppCompatActivity {
@@ -42,7 +42,7 @@ public class MainActivity extends AppCompatActivity {
         btnGetInNewThreat.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                self.goToActivity(AddThreadActivity.class);
+                self.goToActivity(AddThreatActivity.class);
             }
         });
     }

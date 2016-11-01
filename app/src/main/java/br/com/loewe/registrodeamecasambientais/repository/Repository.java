@@ -27,7 +27,7 @@ public class Repository<T extends Object> {
 
     protected Cursor findCursor(Integer id) {
         String colId = DbPersistor.getPrimaryKey(base).getName();
-        Cursor cursor = this.dbHelper.getDb().rawQuery(String.format("SELECT FROM %s * WHERE %s = ?", TABLE_NAME, colId), new String[]{id.toString()});
+        Cursor cursor = this.dbHelper.getDb().rawQuery(String.format("SELECT * FROM %s WHERE %s = ?", TABLE_NAME, colId), new String[]{id.toString()});
 
         if (!cursor.moveToFirst()) {
             throw new IllegalArgumentException(String.format("No cursor has with id: %d", id));

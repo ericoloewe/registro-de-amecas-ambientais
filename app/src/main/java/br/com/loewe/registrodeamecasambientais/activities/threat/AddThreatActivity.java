@@ -7,11 +7,10 @@ import android.widget.Button;
 import android.widget.EditText;
 
 import br.com.loewe.registrodeamecasambientais.R;
-import br.com.loewe.registrodeamecasambientais.activities.MainActivity;
 import br.com.loewe.registrodeamecasambientais.model.Threat;
 import br.com.loewe.registrodeamecasambientais.repository.ThreatRepository;
 
-public class AddThreadActivity extends AppCompatActivity {
+public class AddThreatActivity extends AppCompatActivity {
 
     private ThreatRepository threatRepository;
     private Button btnSubmit;
@@ -20,7 +19,7 @@ public class AddThreadActivity extends AppCompatActivity {
     private EditText inputDistrict;
     private EditText inputPotential;
 
-    public AddThreadActivity() {
+    public AddThreatActivity() {
 
     }
 
@@ -44,7 +43,7 @@ public class AddThreadActivity extends AppCompatActivity {
     }
 
     private void bindUiEvents() {
-        final AddThreadActivity self = this;
+        final AddThreatActivity self = this;
         btnSubmit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
