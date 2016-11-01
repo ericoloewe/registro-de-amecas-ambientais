@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    style="@style/ListThread">
+
+    <TextView
+        android:id="@+id/description"
+        style="@style/ListThread_TextView"
+        android:text="@string/list_thread_label_description" />
+
+    <TextView
+        android:id="@+id/address"
+        style="@style/ListThread_TextView"
+        android:text="@string/list_thread_label_address" />
+
+    <TextView
+        android:id="@+id/district"
+        style="@style/ListThread_TextView"
+        android:text="@string/list_thread_label_district" />
+
+    <TextView
+        android:id="@+id/potential"
+        style="@style/ListThread_TextView"
+        android:text="@string/list_thread_label_potential" />
+</LinearLayout>

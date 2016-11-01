@@ -113,5 +113,16 @@
         <item name="android:textAlignment">center</item>
     </style>
 
+    <style name="ListThread">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:orientation">vertical</item>
+    </style>
+
+    <style name="ListThread_TextView">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+    </style>
+
     <color name="label_default_color">#333</color>
 </resources>

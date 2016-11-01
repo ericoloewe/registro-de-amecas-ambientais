@@ -8,4 +8,8 @@
     <string name="add_thread_label_address">Endereço</string>
     <string name="add_thread_label_district">Bairro</string>
     <string name="add_thread_label_potential">Potencial</string>
+    <string name="list_thread_label_description">Descrição</string>
+    <string name="list_thread_label_address">Endereço</string>
+    <string name="list_thread_label_district">Bairro</string>
+    <string name="list_thread_label_potential">Potencial</string>
 </resources>
