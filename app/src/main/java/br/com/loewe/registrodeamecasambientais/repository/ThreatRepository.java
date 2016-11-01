@@ -60,8 +60,8 @@ public class ThreatRepository extends Repository<Threat> {
         Cursor cursor = super.listByCursor();
 
         cursor.moveToFirst();
-        for (int i = 0; i <= cursor.getCount(); i++) {
-            cursor.move(i);
+        for (int i = 0; i < cursor.getCount(); i++) {
+            cursor.moveToPosition(i);
             threatList.add(convertToThreat(cursor));
         }
 

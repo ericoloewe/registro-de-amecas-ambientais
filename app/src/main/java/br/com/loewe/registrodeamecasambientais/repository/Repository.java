@@ -26,7 +26,6 @@ public class Repository<T extends Object> {
     }
 
     protected Cursor findCursor(Integer id) {
-        dbHelper.open();
         String colId = DbPersistor.getPrimaryKey(base).getName();
         Cursor cursor = this.dbHelper.getDb().rawQuery(String.format("SELECT FROM %s * WHERE %s = ?", TABLE_NAME, colId), new String[]{id.toString()});
 
@@ -34,51 +33,38 @@ public class Repository<T extends Object> {
             throw new IllegalArgumentException(String.format("No cursor has with id: %d", id));
         }
 
-        dbHelper.close();
-
         return cursor;
     }
 
     protected void insert(ContentValues values) {
-        dbHelper.open();
         this.dbHelper.getDb().insert(TABLE_NAME, null, values);
-        dbHelper.close();
     }
 
     protected void update(ContentValues values) {
-        dbHelper.open();
         String colId = DbPersistor.getPrimaryKey(base).getName();
 
         this.dbHelper.getDb().update(TABLE_NAME, values, String.format("%s=?", colId), new String[]{values.getAsString(colId)});
-        dbHelper.close();
     }
 
     protected Integer deleteById(Integer id) {
-        dbHelper.open();
         String colId = DbPersistor.getPrimaryKey(base).getName();
-
         Integer delete = this.dbHelper.getDb().delete(TABLE_NAME, colId + "=" + id, null);
-        dbHelper.close();
         return delete;
     }
 
     protected Cursor listByCursor() {
-        dbHelper.open();
         String colId = DbPersistor.getPrimaryKey(base).getName();
         List<String> columNames = DbPersistor.getColumNames(base);
         String[] colums = columNames.toArray(new String[columNames.size()]);
 
         Cursor list = this.dbHelper.getDb().query(TABLE_NAME, colums, null, null, null, null, colId);
-        dbHelper.close();
 
         return list;
     }
 
     public Integer empty() {
-        dbHelper.open();
         Integer delete = this.dbHelper.getDb().delete(TABLE_NAME, null, null);
 
-        dbHelper.close();
         return delete;
     }
 

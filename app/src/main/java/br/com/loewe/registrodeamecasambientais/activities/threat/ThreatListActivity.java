@@ -9,10 +9,11 @@ import android.widget.Button;
 import android.widget.ListView;
 
 import br.com.loewe.registrodeamecasambientais.R;
+import br.com.loewe.registrodeamecasambientais.adapters.ThreatListAdapter;
 
 public class ThreatListActivity extends AppCompatActivity {
 
-    private Button btnUpdate;
+    private ThreatListAdapter threatListAdapter;
     private ListView threatList;
 
     @Override
@@ -21,19 +22,20 @@ public class ThreatListActivity extends AppCompatActivity {
         setContentView(R.layout.activity_list_threat);
 
         loadViewElements();
+
+        updateAdapter();
         bindUiEvents();
     }
 
     private void loadViewElements() {
         threatList = (ListView) findViewById(R.id.threatList);
-        btnUpdate = (Button) findViewById(R.id.btnUpdate);
     }
 
     private void bindUiEvents() {
-        btnUpdate.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-            }
-        });
+    }
+
+    private void updateAdapter() {
+        threatListAdapter = new ThreatListAdapter(this);
+        threatList.setAdapter(threatListAdapter);
     }
 }
