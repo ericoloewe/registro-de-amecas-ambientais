@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "846003694676",
+    "firebase_url": "https://registro-de-amecas-ambientais.firebaseio.com",
+    "project_id": "registro-de-amecas-ambientais",
+    "storage_bucket": "registro-de-amecas-ambientais.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:846003694676:android:27b2a3ed18653a44",
+        "android_client_info": {
+          "package_name": "br.com.loewe.registrodeamecasambientais"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "846003694676-ufbj437ev37andafhvtjiqiq7iaoo5lq.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyARAOGrbF1zwto2d6KG_siFFNoFoDxgQiY"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
