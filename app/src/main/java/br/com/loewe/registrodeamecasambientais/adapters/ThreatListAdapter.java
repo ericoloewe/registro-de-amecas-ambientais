@@ -45,7 +45,7 @@ public class ThreatListAdapter extends BaseAdapter {
 
     @Override
     public Object getItem(int position) {
-        return threatRepository.find(position);
+        return threatList.get(position);
     }
 
     @Override

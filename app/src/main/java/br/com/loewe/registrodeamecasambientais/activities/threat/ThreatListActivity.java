@@ -10,12 +10,19 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.ValueEventListener;
+
 import br.com.loewe.registrodeamecasambientais.R;
 import br.com.loewe.registrodeamecasambientais.adapters.ThreatListAdapter;
+import br.com.loewe.registrodeamecasambientais.model.Threat;
+import br.com.loewe.registrodeamecasambientais.repository.ThreatRepository;
 
 public class ThreatListActivity extends AppCompatActivity {
 
     private ThreatListAdapter threatListAdapter;
+    private ThreatRepository threatRepository;
     private ListView threatList;
 
     @Override
@@ -25,9 +32,29 @@ public class ThreatListActivity extends AppCompatActivity {
 
         loadViewElements();
 
+        threatRepository = new ThreatRepository(this);
         threatListAdapter = new ThreatListAdapter(this);
         threatList.setAdapter(threatListAdapter);
+
+        loadThreatsFromFirebase();
         bindUiEvents();
+    }
+
+    private void loadThreatsFromFirebase() {
+        threatRepository.getDatabaseReference().addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                for (DataSnapshot d : dataSnapshot.getChildren()) {
+                    threatRepository.saveOrUpdate(d.getValue(Threat.class));
+                    threatListAdapter.notifyDataSetChanged();
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                Log.w("FIREBASE", "loadPost:onCancelled", databaseError.toException());
+            }
+        });
     }
 
     @Override
@@ -72,7 +99,7 @@ public class ThreatListActivity extends AppCompatActivity {
                 .setPositiveButton("Sim", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        self.threatListAdapter.getThreatRepository().delete(id.intValue());
+                        self.threatListAdapter.getThreatRepository().delete(id);
                         self.updateAdapterList();
                     }
                 })
@@ -81,6 +108,7 @@ public class ThreatListActivity extends AppCompatActivity {
 
     private void updateAdapterList() {
         threatListAdapter.updateThreatList();
+        threatListAdapter.notifyDataSetChanged();
     }
 
     private void goToActivity(Class activityClass) {

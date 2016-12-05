@@ -50,6 +50,8 @@ public class Repository<T extends FirebaseModel> {
         Long id = generateNextLong();
 
         values.put("ID", id);
+        item.setId(id);
+
         this.dbHelper.getDb().insert(TABLE_NAME, null, values);
         this.databaseReference.child(String.valueOf(id)).setValue(item);
     }
@@ -64,6 +66,7 @@ public class Repository<T extends FirebaseModel> {
     protected void deleteById(Long id) {
         String colId = DbPersistor.getPrimaryKey(base).getName();
         this.dbHelper.getDb().delete(TABLE_NAME, colId + "=" + id, null);
+        this.databaseReference.child(String.valueOf(id)).removeValue();
     }
 
     protected Cursor listByCursor() {
@@ -78,6 +81,10 @@ public class Repository<T extends FirebaseModel> {
 
     public void empty() {
         this.dbHelper.getDb().delete(TABLE_NAME, null, null);
+    }
+
+    public DatabaseReference getDatabaseReference() {
+        return this.databaseReference;
     }
 
     private Long generateNextLong() {
