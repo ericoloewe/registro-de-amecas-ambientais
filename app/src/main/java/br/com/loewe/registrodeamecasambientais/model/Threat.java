@@ -1,19 +1,21 @@
 package br.com.loewe.registrodeamecasambientais.model;
 
-public class Threat {
+public class Threat implements FirebaseModel {
 
-    private Integer id;
+    private Long id;
     private String description;
     private String address;
     private String district;
     private Integer potential;
     private String image;
 
-    public Integer getId() {
+    @Override
+    public Long getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    @Override
+    public void setId(Long id) {
         this.id = id;
     }
 

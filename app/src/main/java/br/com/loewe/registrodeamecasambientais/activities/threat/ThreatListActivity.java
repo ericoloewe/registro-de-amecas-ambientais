@@ -47,7 +47,7 @@ public class ThreatListActivity extends AppCompatActivity {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Log.d("ID", "" + id);
                 Bundle b = new Bundle();
-                b.putInt("threatId", Long.valueOf(id).intValue());
+                b.putLong("threatId", id);
                 self.goToActivity(UpdateThreatActivity.class, b);
             }
         });

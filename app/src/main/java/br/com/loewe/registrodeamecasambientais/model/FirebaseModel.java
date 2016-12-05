@@ -7,7 +7,5 @@ import java.io.Serializable;
  */
 public interface FirebaseModel extends Serializable {
     Long getId();
-    void setId(Long uuid);
-    String getUUID();
-    void setUUID(String uuid);
+    void setId(Long id);
 }

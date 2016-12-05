@@ -25,7 +25,7 @@ public class ThreatRepository extends Repository<Threat> {
         super(context, Threat.class);
     }
 
-    public Threat find(Integer id) {
+    public Threat find(Long id) {
         return convertToThreat(super.findCursor(id));
     }
 
@@ -38,7 +38,7 @@ public class ThreatRepository extends Repository<Threat> {
         values.put(COL_POTENTIAL, threat.getPotential());
         values.put(COL_IMAGE, threat.getImage());
 
-        super.insert(values);
+        super.insert(values, threat);
     }
 
     public void update(Threat threat) {
@@ -51,10 +51,18 @@ public class ThreatRepository extends Repository<Threat> {
         values.put(COL_POTENTIAL, threat.getPotential());
         values.put(COL_IMAGE, threat.getImage());
 
-        super.update(values);
+        super.update(values, threat);
     }
 
-    public void delete(Integer id) {
+    public void saveOrUpdate(Threat threat) {
+        if(threat.getId() == null) {
+            insert(threat);
+        } else {
+            update(threat);
+        }
+    }
+
+    public void delete(Long id) {
         super.deleteById(id);
     }
 
@@ -74,7 +82,7 @@ public class ThreatRepository extends Repository<Threat> {
     private Threat convertToThreat(Cursor cursor) {
         Threat threat = new Threat();
 
-        threat.setId(cursor.getInt(cursor.getColumnIndex(COL_ID)));
+        threat.setId(cursor.getLong(cursor.getColumnIndex(COL_ID)));
         threat.setDescription(cursor.getString(cursor.getColumnIndex(COL_DESCRIPTION)));
         threat.setAddress(cursor.getString(cursor.getColumnIndex(COL_ADDRESS)));
         threat.setDistrict(cursor.getString(cursor.getColumnIndex(COL_DISTRICT)));

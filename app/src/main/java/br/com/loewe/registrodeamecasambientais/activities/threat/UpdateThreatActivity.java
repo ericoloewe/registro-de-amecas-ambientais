@@ -27,7 +27,7 @@ public class UpdateThreatActivity extends AppCompatActivity {
         Bundle bundle = getIntent().getExtras();
 
         threatRepository = new ThreatRepository(this);
-        Integer threatId = bundle.getInt("threatId");
+        Long threatId = bundle.getLong("threatId");
         actualThreat = threatRepository.find(threatId);
 
         loadViewElements();

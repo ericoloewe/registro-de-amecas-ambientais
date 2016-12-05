@@ -37,14 +37,11 @@ public class DbPersistor {
 
         if (tipo.equals("String")) {
             tipoDoBanco = "TEXT";
-        } else if (tipo.equals("int") || tipo.equals("Integer")) {
+        } else if (tipo.equals("int") || tipo.equals("Integer") || tipo.equals("long") || tipo.equals("Long")) {
             tipoDoBanco = "INTEGER";
         }
-        if (isPrimaryKey(atr)) {
-            return String.format("\n\t%s %s PRIMARY KEY AUTOINCREMENT, ", nome, tipoDoBanco);
-        } else {
-            return String.format("\n\t%s %s NULL, ", nome, tipoDoBanco);
-        }
+
+        return String.format("\n\t%s %s NULL, ", nome, tipoDoBanco);
     }
 
     public static List<String> getColumNames(Class base) {

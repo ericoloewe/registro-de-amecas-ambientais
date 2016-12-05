@@ -6,26 +6,36 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
 import java.util.List;
 
+import br.com.loewe.registrodeamecasambientais.config.FirebaseConnection;
+import br.com.loewe.registrodeamecasambientais.model.FirebaseModel;
 import br.com.loewe.registrodeamecasambientais.utils.DbPersistor;
 
 /**
  * Created by Érico de Souza Loewe on 29/10/2016.
  */
-public class Repository<T extends Object> {
+public class Repository<T extends FirebaseModel> {
 
     private final RepositoryDBHelper dbHelper;
     private final Class<T> base;
     private final String TABLE_NAME;
+    private final DatabaseReference databaseReference;
+    private final FirebaseConnection firebaseConnection;
 
     public Repository(Context context, Class<T> base) {
         this.TABLE_NAME = DbPersistor.getTableName(base);
         this.dbHelper = new RepositoryDBHelper<T>(context, TABLE_NAME, DbPersistor.buildCreateTableCommand(base));
         this.base = base;
+        this.firebaseConnection = new FirebaseConnection(context);
+        this.firebaseConnection.open();
+        this.databaseReference = FirebaseDatabase.getInstance().getReference().child(TABLE_NAME);
     }
 
-    protected Cursor findCursor(Integer id) {
+    protected Cursor findCursor(Long id) {
         String colId = DbPersistor.getPrimaryKey(base).getName();
         Cursor cursor = this.dbHelper.getDb().rawQuery(String.format("SELECT * FROM %s WHERE %s = ?", TABLE_NAME, colId), new String[]{id.toString()});
 
@@ -36,20 +46,24 @@ public class Repository<T extends Object> {
         return cursor;
     }
 
-    protected void insert(ContentValues values) {
+    protected void insert(ContentValues values, T item) {
+        Long id = generateNextLong();
+
+        values.put("ID", id);
         this.dbHelper.getDb().insert(TABLE_NAME, null, values);
+        this.databaseReference.child(String.valueOf(id)).setValue(item);
     }
 
-    protected void update(ContentValues values) {
+    protected void update(ContentValues values, T item) {
         String colId = DbPersistor.getPrimaryKey(base).getName();
 
         this.dbHelper.getDb().update(TABLE_NAME, values, String.format("%s=?", colId), new String[]{values.getAsString(colId)});
+        this.databaseReference.child(String.valueOf(item.getId())).setValue(item);
     }
 
-    protected Integer deleteById(Integer id) {
+    protected void deleteById(Long id) {
         String colId = DbPersistor.getPrimaryKey(base).getName();
-        Integer delete = this.dbHelper.getDb().delete(TABLE_NAME, colId + "=" + id, null);
-        return delete;
+        this.dbHelper.getDb().delete(TABLE_NAME, colId + "=" + id, null);
     }
 
     protected Cursor listByCursor() {
@@ -62,10 +76,15 @@ public class Repository<T extends Object> {
         return list;
     }
 
-    public Integer empty() {
-        Integer delete = this.dbHelper.getDb().delete(TABLE_NAME, null, null);
+    public void empty() {
+        this.dbHelper.getDb().delete(TABLE_NAME, null, null);
+    }
 
-        return delete;
+    private Long generateNextLong() {
+        Cursor cursor = this.dbHelper.getDb().rawQuery(String.format("select max(ID) as max from %s", TABLE_NAME), null);
+        cursor.moveToFirst();
+
+        return cursor.getLong(0) + 1;
     }
 
     private class RepositoryDBHelper<T extends Object> extends SQLiteOpenHelper {
