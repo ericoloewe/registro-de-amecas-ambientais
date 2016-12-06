@@ -10,6 +10,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -105,17 +106,27 @@ public class ThreatListActivity extends AppCompatActivity {
                 .setPositiveButton("Sim", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        self.deleteThreatImage(id);
-                        self.threatListAdapter.getThreatRepository().delete(id);
-                        self.updateAdapterList();
+                        self.deleteThreatImage(id, new ImageIOFirebase.OnDeleteImage() {
+                            @Override
+                            public void onSuccess(String imageUrl, Object o) {
+                                self.threatListAdapter.getThreatRepository().delete(id);
+                                Toast.makeText(getBaseContext(), "Desastre deletado com sucesso!", Toast.LENGTH_SHORT).show();
+                                self.updateAdapterList();
+                            }
+
+                            @Override
+                            public void onFailure(String imageUrl, Exception exception) {
+                                Toast.makeText(getBaseContext(), "Problemas ao deletar desastre!", Toast.LENGTH_SHORT).show();
+                            }
+                        });
                     }
                 })
                 .show();
     }
 
-    private void deleteThreatImage(Long id) {
+    private void deleteThreatImage(Long id, ImageIOFirebase.OnDeleteImage onDeleteImage) {
         Threat threat = this.threatRepository.find(id);
-        new ImageIOFirebase().delete(threat.getImage());
+        new ImageIOFirebase().delete(threat.getImage(), onDeleteImage);
     }
 
     private void updateAdapterList() {

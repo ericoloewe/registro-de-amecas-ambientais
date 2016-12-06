@@ -65,8 +65,19 @@ public class ImageIOFirebase {
         });
     }
 
-    public void delete(String imageUrl) {
-        FirebaseStorage.getInstance().getReferenceFromUrl(imageUrl).delete();
+    public void delete(final String imageUrl, final OnDeleteImage onDeleteImage) {
+        FirebaseStorage.getInstance().getReferenceFromUrl(imageUrl).delete().addOnSuccessListener(new OnSuccessListener() {
+            @Override
+            public void onSuccess(Object o) {
+                onDeleteImage.onSuccess(imageUrl, o);
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception exception) {
+                onDeleteImage.onFailure(imageUrl, exception);
+                Log.e("Error", exception.getMessage());
+            }
+        });
     }
 
     public static class ImageDownloader extends AsyncTask<String, Void, Bitmap> {
@@ -95,7 +106,13 @@ public class ImageIOFirebase {
         }
     }
 
-    public interface OnSaveImage {
+    public static interface OnDeleteImage {
+        void onSuccess(String imageUrl, Object o);
+
+        void onFailure(String imageUrl, Exception exception);
+    }
+
+    public static interface OnSaveImage {
         void onSuccess(Bitmap bitmap, Uri downloadUrl);
 
         void onFailure(Bitmap bitmap, Exception exception);
