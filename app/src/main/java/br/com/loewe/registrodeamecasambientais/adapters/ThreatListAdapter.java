@@ -1,5 +1,7 @@
 package br.com.loewe.registrodeamecasambientais.adapters;
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -7,6 +9,8 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import java.io.IOException;
+import java.net.URL;
 import java.util.List;
 
 import br.com.loewe.registrodeamecasambientais.IO.ImageIO;
@@ -73,11 +77,12 @@ public class ThreatListAdapter extends BaseAdapter {
         potential.setText(String.format("%d", threatList.get(position).getPotential()));
         String threatImage = threatList.get(position).getImage();
         if (threatImage != null) {
-            image.setImageBitmap(
-                    new ImageIO(this.context)
-                            .setDirectoryName("THREAT")
-                            .setFileName(threatImage)
-                            .load());
+//            try {
+//                URL newurl = new URL(threatImage);
+//                image.setImageBitmap(BitmapFactory.decodeStream(newurl.openConnection().getInputStream()));
+//            } catch (IOException e) {
+//                e.printStackTrace();
+//            }
         }
 
         return row;

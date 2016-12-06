@@ -18,6 +18,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import br.com.loewe.registrodeamecasambientais.IO.ImageIO;
+import br.com.loewe.registrodeamecasambientais.IO.ImageIOFirebase;
 import br.com.loewe.registrodeamecasambientais.R;
 import br.com.loewe.registrodeamecasambientais.model.Threat;
 import br.com.loewe.registrodeamecasambientais.repository.ThreatRepository;
@@ -94,15 +95,25 @@ public class AddThreatActivity extends AppCompatActivity {
         threat.setPotential(Integer.valueOf(inputPotential.getText().toString()));
 
         saveThreatImage(threat);
-        threatRepository.insert(threat);
-        finish();
     }
 
-    private void saveThreatImage(Threat threat) {
-        threat.setImage(String.format("THREAT_%s_%s.jpg", threat.getDescription(), new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date())));
-        new ImageIO(this)
-                .setDirectoryName("THREAT")
+    private void saveThreatImage(final Threat threat) {
+        threat.setImage(String.format("THREAT_%s.jpg", new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date())));
+        new ImageIOFirebase()
+                .setSubDirectory("THREAT")
                 .setFileName(threat.getImage())
-                .save(threatImage);
+                .save(threatImage, new ImageIOFirebase.OnSaveImage() {
+                    @Override
+                    public void onSuccess(Bitmap bitmap, Uri downloadUrl) {
+                        threat.setImage(downloadUrl.toString());
+                        threatRepository.insert(threat);
+                        finish();
+                    }
+
+                    @Override
+                    public void onFailure(Bitmap bitmap, Exception exception) {
+
+                    }
+                });
     }
 }

@@ -3,6 +3,7 @@ package br.com.loewe.registrodeamecasambientais.activities.threat;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -14,6 +15,11 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.ValueEventListener;
 
+import java.net.URI;
+import java.net.URISyntaxException;
+import java.net.URL;
+
+import br.com.loewe.registrodeamecasambientais.IO.ImageIOFirebase;
 import br.com.loewe.registrodeamecasambientais.R;
 import br.com.loewe.registrodeamecasambientais.adapters.ThreatListAdapter;
 import br.com.loewe.registrodeamecasambientais.model.Threat;
@@ -99,11 +105,17 @@ public class ThreatListActivity extends AppCompatActivity {
                 .setPositiveButton("Sim", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
+                        self.deleteThreatImage(id);
                         self.threatListAdapter.getThreatRepository().delete(id);
                         self.updateAdapterList();
                     }
                 })
                 .show();
+    }
+
+    private void deleteThreatImage(Long id) {
+        Threat threat = this.threatRepository.find(id);
+        new ImageIOFirebase().delete(threat.getImage());
     }
 
     private void updateAdapterList() {
