@@ -1,8 +1,12 @@
 package br.com.loewe.registrodeamecasambientais.IO;
 
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.support.annotation.NonNull;
+import android.util.Log;
+import android.widget.ImageView;
 
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -11,6 +15,7 @@ import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
 import java.io.ByteArrayOutputStream;
+import java.io.InputStream;
 
 /**
  * Created by Érico de Souza Loewe on 05/12/2016.
@@ -62,6 +67,32 @@ public class ImageIOFirebase {
 
     public void delete(String imageUrl) {
         FirebaseStorage.getInstance().getReferenceFromUrl(imageUrl).delete();
+    }
+
+    public static class ImageDownloader extends AsyncTask<String, Void, Bitmap> {
+        ImageView bmImage;
+
+        public ImageDownloader(ImageView bmImage) {
+            this.bmImage = bmImage;
+        }
+
+        protected Bitmap doInBackground(String... urls) {
+            String url = urls[0];
+            Bitmap mIcon = null;
+
+            try {
+                InputStream in = new java.net.URL(url).openStream();
+                mIcon = BitmapFactory.decodeStream(in);
+            } catch (Exception e) {
+                Log.e("Error", e.getMessage());
+            }
+
+            return mIcon;
+        }
+
+        protected void onPostExecute(Bitmap result) {
+            bmImage.setImageBitmap(result);
+        }
     }
 
     public interface OnSaveImage {
